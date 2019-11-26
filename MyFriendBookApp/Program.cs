@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
 namespace MyFriendBookApp
@@ -12,6 +13,10 @@ namespace MyFriendBookApp
         private const string ActionPrompt = "Suchtext, Befehl oder ?: ";
         private const string EnterFirstName = "Vornamen eingeben: ";
         private const string EnterLastName = "Nachnamen eingeben: ";
+        private const string EnterAdditional = "Infotext: ";
+
+        private static string[][] contacts = new string[100][];
+        private static int count = 0;
 
         #endregion
         static void Main(string[] args)
@@ -28,11 +33,12 @@ namespace MyFriendBookApp
 
             #endregion
 
-            Console.WriteLine(AppTitle);
-
             string action;
             do
             {
+                WriteTitle();
+                ClearLine(1);
+                Console.SetCursorPosition(Console.CursorLeft, 1); 
                 Console.Write(ActionPrompt);
                 action = Console.ReadLine();
 
@@ -47,6 +53,7 @@ namespace MyFriendBookApp
                     default:
                         break;
                 }
+                Console.Clear();
             } while (action != "-v");
 
             Console.Write("Auf wiedersehen.");
@@ -73,21 +80,35 @@ namespace MyFriendBookApp
 
         static void ContactAdd()
         {
-            string[] newContact = ContactRead();
+            string[] newContact;
+            do
+            {
+                newContact = ContactRead();
+            } while (newContact == null);
+
+            contacts[count++] = newContact;
         }
 
         static string[] ContactRead()
         {
             string firstName;
             string lastName;
-            string[] newContact;
+            string additionalInfo
 
             Console.Write(EnterFirstName);
             firstName = Console.ReadLine();
             Console.Write(EnterLastName);
             lastName = Console.ReadLine();
+            Console.WriteLine(EnterAdditional);
+
+            if (lastName == "" && firstName == "")
+            {
+                ShowError("Bitte mindestens ein Feld füllen!");
+                return null;
+            }
             
-            return new string[] {firstName, lastName};
+            ClearError();
+            return new string[] {firstName, lastName, additionalInfo};
         }
 
         static void ContactSearch(string pattern)
@@ -118,6 +139,37 @@ namespace MyFriendBookApp
         static void SaveAll()
         {
             Console.WriteLine("Noch nicht fertig");
+        }
+
+        static void ShowError(string message)
+        {
+            Console.SetCursorPosition(Console.CursorLeft, Console.WindowHeight -2);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(message);
+            Console.SetCursorPosition(0, 2);
+            Console.ForegroundColor = ConsoleColor.Blue;
+        }
+
+        static void ClearError()
+        {
+            Console.SetCursorPosition(Console.CursorLeft, Console.WindowHeight -2);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 2);
+        }
+
+        static void ClearLine(int line)
+        {
+            int lastLine = Console.CursorTop;
+            Console.SetCursorPosition(Console.CursorLeft, line);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, lastLine);
+        }
+
+        static void WriteTitle()
+        {
+            int left = Console.WindowWidth / 2 - (AppTitle.Length / 2);
+            Console.SetCursorPosition(left, 0);
+            Console.WriteLine(AppTitle);
         }
     }
 }

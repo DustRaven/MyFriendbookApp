@@ -7,18 +7,18 @@ namespace MyFriendBookApp
     {
         #region Set up strings
 
-        const string windowTitle = "My Friend Book";
-        const string appTitle = "******* " + windowTitle + " *******";
-        const string actionPrompt = "Suchtext, Befehl oder ?: ";
-        const string enterFirstName = "Vornamen eingeben: ";
-        const string enterLastName = "Nachnamen eingeben: ";
+        private const string WindowTitle = "My Friend Book";
+        private const string AppTitle = "******* " + WindowTitle + " *******";
+        private const string ActionPrompt = "Suchtext, Befehl oder ?: ";
+        private const string EnterFirstName = "Vornamen eingeben: ";
+        private const string EnterLastName = "Nachnamen eingeben: ";
 
         #endregion
         static void Main(string[] args)
         {
             #region Set up window parameters
 
-            Console.Title = windowTitle;
+            Console.Title = WindowTitle;
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WindowWidth = 50;
@@ -28,22 +28,24 @@ namespace MyFriendBookApp
 
             #endregion
 
-            Console.WriteLine(appTitle);
+            Console.WriteLine(AppTitle);
 
             string action;
             do
             {
-                Console.Write(actionPrompt);
+                Console.Write(ActionPrompt);
                 action = Console.ReadLine();
 
-                if (action == "?")
+                switch (action)
                 {
-                    ShowHelp();
-                }
-
-                if (action == "+")
-                {
-                    ContactAdd();
+                    case "?":
+                        ShowHelp();
+                        break;
+                    case "+":
+                        ContactAdd();
+                        break;
+                    default:
+                        break;
                 }
             } while (action != "-v");
 
@@ -53,8 +55,8 @@ namespace MyFriendBookApp
         }
 
         static void ShowHelp()
-        {
-            int version = 1;
+        { 
+            const int version = 1;
             string infoText = "\n  Ersteller: Wilhelmy, Wulf\n" +
                               "  Version: " + version + "\n\n" +
                               "  ?               : Diese Hilfe anzeigen\n" +
@@ -80,9 +82,9 @@ namespace MyFriendBookApp
             string lastName;
             string[] newContact;
 
-            Console.Write(enterFirstName);
+            Console.Write(EnterFirstName);
             firstName = Console.ReadLine();
-            Console.Write(enterLastName);
+            Console.Write(EnterLastName);
             lastName = Console.ReadLine();
             
             return new string[] {firstName, lastName};

@@ -1,0 +1,10 @@
+EBNF: 
+
+Kontakte = {Kontakt};
+Kontakt = (Vorname, Nachname) | (Vorname) | (Nachname), {Attribut};
+
+BNF:
+
+<Kontakte> ::= { <Kontakt> }
+<VollerName> ::= <Vorname> + <Nachname>;
+<Kontakt> ::= <VollerName> + <Vorname> + <Nachname> + ({<Attribute>})

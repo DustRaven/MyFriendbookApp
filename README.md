@@ -294,7 +294,7 @@ Variablen.
 
 Weiter geht's später mit Version 2 dieses Dokumentes
 
-NochOffene Posten
+Noch Offene Posten
 
 -   Weitere Funktionaliäten
 
